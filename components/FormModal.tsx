@@ -37,8 +37,12 @@ export default function FormModal({ btnText }: { btnText: string }) {
             </div>
             <div>
               <div className="mb-2 block"></div>
-              <FileInputField />
+              <FileInputField label="Add photo" />
             </div>
+
+            <Button color="dark" onClick={() => {}} className="w-full">
+              Submit
+            </Button>
           </div>
         </Modal.Body>
       </Modal>
