@@ -1,5 +1,11 @@
-import React from "react";
+"use client";
 
-export default function SignUp() {
-  return <div>Sign Up</div>;
+import { SignUp } from "@clerk/clerk-react";
+
+export default function SignUpPage() {
+  return (
+    <div className="container py-6 h-full w-full flex justify-center items-center">
+      <SignUp />
+    </div>
+  );
 }
