@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-react": "^5.11.0",
     "convex": "^1.16.3",
     "flowbite-react": "^0.10.2",
     "next": "14.2.14",

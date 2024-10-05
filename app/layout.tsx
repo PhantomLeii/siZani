@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import NavbarMenu from "@/components/NavbarMenu";
+import ConvexWithClerkProvider from "@/context/ConvexWithClerkProvider";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -29,8 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${roboto.className} antialiased`}>
-        <NavbarMenu />
-        <div className="absolute top-[72px] left-0 w-full">{children}</div>
+        <ConvexWithClerkProvider>
+          <NavbarMenu />
+          <div className="absolute top-[72px] left-0 w-full">{children}</div>
+        </ConvexWithClerkProvider>
       </body>
     </html>
   );
