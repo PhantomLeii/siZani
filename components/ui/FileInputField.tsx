@@ -8,7 +8,7 @@ export default function FileInputField({ label }: { label: string }) {
       <div>
         <Label htmlFor="multiple-file-upload" value={label} />
       </div>
-      <FileInput id="multiple-file-upload" multiple />
+      <FileInput id="multiple-file-upload" />
     </div>
   );
 }
