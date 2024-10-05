@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${roboto.className} antialiased`}>
         <ConvexWithClerkProvider>
           <NavbarMenu />
-          <div className="absolute top-[72px] left-0 w-full">{children}</div>
+          <div className="absolute top-[88px] left-0 w-full">{children}</div>
         </ConvexWithClerkProvider>
       </body>
     </html>
