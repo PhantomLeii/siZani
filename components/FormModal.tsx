@@ -11,12 +11,13 @@ export default function FormModal({ btnText }: { btnText: string }) {
   const issueTitleRef = useRef<HTMLInputElement>(null);
   const issueDescRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const createIssue = useMutation(api.issues.createIssue);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
 
-  async function handleSendImage(event: React.FormEvent) {
-    event.preventDefault();
+  async function handleSubmit() {
+    setIsLoading(true);
 
     const postUrl = await generateUploadUrl();
     const result = await fetch(postUrl, {
@@ -24,15 +25,16 @@ export default function FormModal({ btnText }: { btnText: string }) {
       headers: { "Content-Type": "image/*" },
       body: selectedImage,
     });
-    const { storageId } = await result.json();
-  }
 
-  function handleSubmit() {
-    console.log({
-      title: issueTitleRef.current?.value as string,
-      description: issueDescRef.current?.value as string,
-      imageUrl: "",
+    const { storageId } = await result.json();
+
+    createIssue({
+      title: issueTitleRef.current?.value || "",
+      description: issueDescRef.current?.value || "",
+      imageId: storageId,
     });
+
+    setIsLoading(false);
   }
 
   return (
@@ -46,51 +48,54 @@ export default function FormModal({ btnText }: { btnText: string }) {
         initialFocus={issueTitleRef}
       >
         <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Create a new issue
-            </h3>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="What are you reporting?" />
+        <form onSubmit={handleSubmit}>
+          <Modal.Body>
+            <div className="space-y-6">
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                Create a new issue
+              </h3>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email" value="What are you reporting?" />
+                </div>
+                <TextInput
+                  id="email"
+                  ref={issueTitleRef}
+                  placeholder="There is..."
+                  required
+                />
               </div>
-              <TextInput
-                id="email"
-                ref={issueTitleRef}
-                placeholder="There is..."
-                required
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Description" />
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email" value="Description" />
+                </div>
+                <TextInput
+                  id="email"
+                  ref={issueDescRef}
+                  placeholder="describe the issue..."
+                  required
+                />
               </div>
-              <TextInput
-                id="email"
-                ref={issueDescRef}
-                placeholder="describe the issue..."
-                required
-              />
+              <div>
+                <FileInputField
+                  label="Add photo"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSelectedImage(e.target.files ? e.target.files[0] : null)
+                  }
+                />
+              </div>
+              <Button
+                isProcessing={isLoading}
+                disabled={isLoading}
+                color="dark"
+                type="submit"
+                className="w-full"
+              >
+                Submit
+              </Button>
             </div>
-
-            <div>
-              <FileInputField label="Add photo" />
-            </div>
-
-            <Button
-              color="dark"
-              onClick={() => {
-                handleSubmit;
-              }}
-              className="w-full"
-            >
-              Submit
-            </Button>
-          </div>
-        </Modal.Body>
+          </Modal.Body>
+        </form>
       </Modal>
     </>
   );
