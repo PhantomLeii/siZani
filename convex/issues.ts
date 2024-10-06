@@ -1,7 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
 import { getUserID } from "./utils";
-import { auth } from "@clerk/nextjs/server";
 
 export const createIssue = mutation({
   args: {
