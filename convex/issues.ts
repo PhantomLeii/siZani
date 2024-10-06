@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { getUserID } from "./utils";
 
 export const createIssue = mutation({
@@ -29,5 +29,20 @@ export const createIssue = mutation({
     }
 
     return 0;
+  },
+});
+
+export const listIssues = query({
+  args: {},
+
+  handler: async (ctx) => {
+    const userId = await getUserID(ctx);
+    if (!userId) {
+      throw new Error("User not found");
+    }
+
+    const issues = await ctx.db.query("issues").order("desc").take(100);
+
+    return issues;
   },
 });
