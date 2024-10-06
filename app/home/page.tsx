@@ -5,6 +5,7 @@ import React from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Spinner } from "flowbite-react";
+import Map from "@/components/Map";
 
 export default function HomePage() {
   const issues = useQuery(api.issues.listIssues);
@@ -30,7 +31,9 @@ export default function HomePage() {
           ))}
         </div>
       </div>
-      <div className="h-full w-full bg-yellow-400 col-span-3"></div>
+      <div className="h-full w-full bg-gray-700 col-span-3">
+        <Map />
+      </div>
     </div>
   );
 }

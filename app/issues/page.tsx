@@ -25,7 +25,8 @@ export default function IssuesPage() {
             key={issue.id}
             title={issue.title}
             desc={issue.description}
-            // imageUrl={issue.imageUrl}
+            imageUrl={issue.imageUrl}
+            ticketNumber={issue.id}
           />
         ))}
       </div>

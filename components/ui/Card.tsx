@@ -1,15 +1,16 @@
 import React from "react";
-import Button from "./Button";
 import Image from "next/image";
 
 export default function Card({
   title,
   desc,
   imageUrl,
+  ticketNumber,
 }: {
   title: string;
   desc: string;
   imageUrl: string;
+  ticketNumber?: string;
 }) {
   return (
     <div className="w-full p-6 rounded-md flex flex-col justify-start items-start bg-gray-800">
@@ -27,6 +28,7 @@ export default function Card({
       <div className="w-full mt-4 text-neutral-300 tracking-wide">
         <p>{desc}</p>
       </div>
+      <p className="text-lg text-gray-400">{ticketNumber}</p>
     </div>
   );
 }
